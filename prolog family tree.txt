@@ -1,0 +1,51 @@
+male(john).
+male(joseph).
+male(lawrence).
+male(stephen).
+male(alan).
+male(alvin).
+male(andrew).
+
+female(esther).
+female(nellie).
+female(anne).
+female(lisa).
+female(rebekah).
+female(grace).
+
+
+parent(john, joseph).
+parent(john, nellie).
+parent(john, lawrence).
+parent(john, stephen).
+parent(esther, joseph).
+parent(esther, nellie).
+parent(esther, lawrence).
+parent(esther, stephen).
+
+parent(joseph, alvin).
+parent(joseph, alan).
+parent(joseph, andrew).
+parent(anne, alvin).
+parent(anne, alan).
+parent(anne, andrew).
+
+parent(andrew, rebekah).
+parent(andrew, grace).
+parent(lisa, rebekah).
+parent(lisa, grace).
+
+marry(andrew, lisa).
+marry(joseph, anne).
+marry(john, esther).
+
+% Rules: Define the relationships based on gender
+father(X, Y) :- male(X), parent(X, Y).
+mother(X, Y) :- female(X), parent(X, Y).
+grandparent(X, Z) :- parent(X, Y), parent(Y, Z).
+greatgrandparent(W, Z):- parent(W,X), parent(X, Y), parent(Y, Z).
+uncle(X, Y) :- male(X), grandparent(Z, Y), parent(Z, X).
+aunt(X, Y) :- female(X), grandparent(Z, Y), parent(Z, X).
+nephew(X, Y) :- male(X), grandparent(Z, X), parent(Z, Y).
+niece(X, Y) :- female(X), grandparent(Z, X), parent(Z, Y).
+spouse(X, Y) :- marry(X, Y); marry(Y, X).
